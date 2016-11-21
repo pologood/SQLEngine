@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlEngine:rule SYSTEM "rule.dtd">
+<sqlEngine:rule xmlns:sqlEngine="http://com.baidu.sqlengine/">
+	<tableRule name="rule1">
+		<rule>
+			<columns>id</columns>
+			<algorithm>func1</algorithm>
+		</rule>
+	</tableRule>
+
+	<tableRule name="rule2">
+		<rule>
+			<columns>user_id</columns>
+			<algorithm>func1</algorithm>
+		</rule>
+	</tableRule>
+
+	<tableRule name="mod-long">
+		<rule>
+			<columns>id</columns>
+			<algorithm>mod-long</algorithm>
+		</rule>
+	</tableRule>
+	<tableRule name="sharding-by-month">
+		<rule>
+			<columns>create_time</columns>
+			<algorithm>partbymonth</algorithm>
+		</rule>
+	</tableRule>
+
+	<function name="mod-long" class="com.baidu.sqlengine.route.function.PartitionByMod">
+		<!-- how many data nodes -->
+		<property name="count">3</property>
+	</function>
+
+	<function name="func1" class="com.baidu.sqlengine.route.function.PartitionByLong">
+		<property name="partitionCount">8</property>
+		<property name="partitionLength">128</property>
+	</function>
+
+	<function name="partbymonth"
+		class="com.baidu.sqlengine.route.function.PartitionByMonth">
+		<property name="dateFormat">yyyy-MM-dd</property>
+		<property name="sBeginDate">2017-01-01</property>
+	</function>
+
+</sqlEngine:rule>
