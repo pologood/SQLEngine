@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE sqlEngine:schema SYSTEM "schema.dtd">
+<sqlEngine:schema xmlns:sqlEngine="http://com.baidu.sqlengine/">
+
+    <schema name="testdb" checkSQLschema="false" sqlMaxLimit="100">
+        <table name="task_info" primaryKey="id" type="global" dataNode="dn1"/>
+        <table name="redis_tbl" primaryKey="id" type="global" dataNode="dnRedis"/>
+        <table name="mongo_tbl" primaryKey="id" type="global" dataNode="dnMongo"/>
+    </schema>
+
+    <dataNode name="dn1" dataHost="localhost1" database="mysqldb"/>
+    <dataNode name="dn2" dataHost="localhost1" database="mysqldb"/>
+    <dataNode name="dn3" dataHost="localhost1" database="mysqldb"/>
+
+    <dataNode name="dnRedis" dataHost="redisHost" database="redisdb"/>
+
+    <dataNode name="dnMongo" dataHost="mongoHost" database="test"/>
+
+    <dataHost name="localhost1" maxCon="1000" minCon="10" balance="0"
+              writeType="0" dbType="mysql" dbDriver="native" switchType="1" slaveThreshold="100">
+        <heartbeat>select user()</heartbeat>
+        <!-- can have multi write hosts -->
+        <writeHost host="hostM1" url="111.111.111.111:8888" user="xxx" password="xxx">
+            <!-- can have multi read hosts -->
+            <readHost host="hostS2" url="111.111.111.111:8888" user="xxx" password="xxx"/>
+        </writeHost>
+    </dataHost>
+
+    <dataHost name="redisHost" maxCon="1000" minCon="10" balance="0" dbType="mysql" dbDriver="jdbc">
+        <heartbeat>select user()</heartbeat>
+        <writeHost host="host1"
+                   url="redis://111.111.111.111:8888"
+                   user="xxx" password="xxx">
+        </writeHost>
+    </dataHost>
+
+    <dataHost name="mongoHost" maxCon="1000" minCon="1" balance="0" writeType="0" dbType="mongodb" dbDriver="jdbc">
+        <heartbeat>select user()</heartbeat>
+        <writeHost host="host1"
+                   url="mongodb://111.111.111.111:8888/test"
+                   user="xxx" password="xxx">
+        </writeHost>
+    </dataHost>
+
+</sqlEngine:schema>
