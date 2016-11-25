@@ -97,26 +97,20 @@ public final class ShowHelp {
         helps.put("show @@sql.slow", "Report slow SQL");
         helps.put("show @@slow where schema = ?", "Report schema slow sql");
         helps.put("show @@slow where datanode = ?", "Report datanode slow sql");
-
         // kill
         helps.put("kill @@connection id1,id2,...", "Kill the specified connections");
-
         // stop
         helps.put("stop @@heartbeat name:time", "Pause dataNode heartbeat");
-
         // reload
         helps.put("reload @@config", "Reload basic config from file");
         // rollback
         helps.put("rollback @@config", "Rollback all config from memory");
-
         // offline/online
         helps.put("offline", "Change SqlEngine status to OFF");
         helps.put("online", "Change SqlEngine status to ON");
-
         // clear
         helps.put("clear @@slow where schema = ?", "Clear slow sql by schema");
         helps.put("clear @@slow where datanode = ?", "Clear slow sql by datanode");
-
         // list sort
         keys.addAll(helps.keySet());
     }
